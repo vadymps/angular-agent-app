@@ -19,12 +19,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Get git tag
+      - name: Get latest tag
         id: get_tag
-        run: echo "TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+        run: |
+          TAG=$(git describe --tags --abbrev=0)
+          echo "TAG=$TAG" >> $GITHUB_ENV
 
-      - name: Print tag
-        run: echo "Current tag is $TAG"
+      - name: Use the tag
+        run: echo "Latest tag is $TAG"
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
