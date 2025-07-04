@@ -65,4 +65,4 @@ jobs:
         run: |
           envsubst < k8s-angular-agent-app.yaml | kubectl apply -f -
         env:
-          IMAGE_TAG: ${{ needs.build-and-push.outputs.tag }}
+          IMAGE_TAG: ${{ needs.build-and-push.outputs.git_tag }}
