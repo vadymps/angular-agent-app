@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      git_tag: ${{ steps.get_tag.outputs.git_tag }}
+      git_tag: ${{ steps.get_tag.outputs.tag }}
 
     steps:
       - name: Checkout repository
@@ -53,7 +53,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: vadimpastushenko7/angular-agent-app:${{ steps.get_tag.outputs.git_tag }}
+          tags: vadimpastushenko7/angular-agent-app:${{ env.TAG }}
 
   deploy-on-vm:
     runs-on: self-hosted
@@ -64,4 +64,4 @@ jobs:
         run: |
           envsubst < k8s-angular-agent-app.yaml | kubectl apply -f -
         env:
-          IMAGE_TAG: ${{ needs.build-and-push.outputs.git_tag }}
+          IMAGE_TAG: ${{ needs.build-and-push.outputs.tag }}
