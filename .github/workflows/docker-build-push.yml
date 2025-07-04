@@ -13,6 +13,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Get git tag
+        id: get_tag
+        run: echo "GIT_TAG=$(git describe --tags)" >> $GITHUB_ENV
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -38,4 +42,9 @@ jobs:
         with:
           context: .
           push: true
-          tags: vadimpastushenko7/angular-agent-app:latest
+          tags: vadimpastushenko7/angular-agent-app:${{ env.GIT_TAG }}
+
+      - name: Substitute image tag in manifest
+        run: envsubst < k8s-angular-agent-app.yaml | kubectl apply -f -
+        env:
+          GIT_TAG: ${{ env.IMAGE_TAG }}
