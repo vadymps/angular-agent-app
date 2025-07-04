@@ -2,8 +2,8 @@ name: Build and Push Docker Image
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -21,7 +21,10 @@ jobs:
 
       - name: Get git tag
         id: get_tag
-        run: echo "::set-output name=git_tag::${GITHUB_REF#refs/tags/}"
+        run: echo "TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Print tag
+        run: echo "Current tag is $TAG"
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
