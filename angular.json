@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "outputPath": "dist/angular-agent-app/browser",
+            "outputPath": "dist/angular-agent-app",
             "index": "src/index.html",
             "tsConfig": "tsconfig.app.json",
             "assets": [
