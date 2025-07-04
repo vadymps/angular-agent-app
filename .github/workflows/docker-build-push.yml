@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Get git tag
         id: get_tag
@@ -47,4 +49,4 @@ jobs:
       - name: Substitute image tag in manifest
         run: envsubst < k8s-angular-agent-app.yaml | kubectl apply -f -
         env:
-          GIT_TAG: ${{ env.IMAGE_TAG }}
+          IMAGE_TAG: ${{ env.GIT_TAG }}
